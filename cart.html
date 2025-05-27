@@ -142,4 +142,122 @@
   </div>
 
   <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+<script>
+    document.getElementById("userGreeting").innerText = localStorage.getItem("username") || "Guest";
 
+    // Load cart items from localStorage
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartItemsContainer = document.getElementById("cartItems");
+      const totalPriceElement = document.getElementById("totalPrice");
+
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
+
+      cart.forEach(item => {
+        const cartItemElement = document.createElement("div");
+        cartItemElement.className = "cart-item";
+        cartItemElement.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div class="cart-item-details">
+            <h4>${item.name}</h4>
+            <p>₹${item.price} x 
+              <input type="number" value="${item.quantity}" min="1" onchange="updateCart(${item.id}, this.value)">
+            </p>
+            <button onclick="removeFromCart(${item.id})">Remove</button>
+          </div>
+          <span>₹${item.price * item.quantity}</span>
+        `;
+        cartItemsContainer.appendChild(cartItemElement);
+
+        total += item.price * item.quantity;
+      });
+
+      totalPriceElement.innerText = ⁠ Total: ₹${total} ⁠;
+    }
+
+    loadCart();
+
+    // Update cart quantity
+    function updateCart(id, quantity) {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const item = cart.find(item => item.id === id);
+      if (item) {
+        item.quantity = parseInt(quantity);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCart(); // Re-render cart
+      }
+    }
+
+    // Remove item from cart
+    function removeFromCart(id) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart = cart.filter(item => item.id !== id); // Remove the selected item
+      localStorage.setItem("cart", JSON.stringify(cart));
+      loadCart(); // Re-render cart
+    }
+
+    // Checkout logic (simulated)
+    function checkout() {
+      if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
+        window.location.href = "checkout.html";
+      } else {
+        alert("Your cart is empty.");
+      }
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("username");
+      localStorage.removeItem("cart");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <script>
+    // js/main.js
+
+// Sample food data
+const foodItems = [
+    { id: 1, name: "Cheese Pizza", price: 199, image: "assets/images/pizza.jpg" },
+    { id: 2, name: "Veg Burger", price: 129, image: "assets/images/burger.jpg" },
+    { id: 3, name: "Fries", price: 89, image: "assets/images/fries.jpg" },
+    { id: 4, name: "Coke", price: 49, image: "assets/images/coke.jpg" },
+    { id: 5, name: "Pasta", price: 159, image: "assets/images/pasta.jpg" },
+  ];
+  
+  
+  const menuList = document.getElementById("menuList");
+  
+  foodItems.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "item-card";
+    card.innerHTML = `
+      <img src="${item.image}" alt="${item.name}">
+      <h3>${item.name}</h3>
+      <p>₹${item.price}</p>
+      <button onclick="addToCart(${item.id})">Add to Cart</button>
+    `;
+    menuList.appendChild(card);
+  });
+  
+  // Cart logic (using localStorage)
+  function addToCart(id) {
+    const selectedItem = foodItems.find(item => item.id === id);
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  
+    const existingItem = cart.find(item => item.id === id);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({ ...selectedItem, quantity: 1 });
+    }
+  
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+  
+  </script>
+
+</body>
+</html>
