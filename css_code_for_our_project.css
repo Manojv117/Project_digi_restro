@@ -429,10 +429,3 @@ status-badge.cancelled {
     color: var(--gray-color);
 }
 
-.pass-actions-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-
