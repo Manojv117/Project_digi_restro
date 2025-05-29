@@ -242,20 +242,42 @@ const foodItems = [
     menuList.appendChild(card);
   });
   
-  // Cart logic (using localStorage)
-  function addToCart(id) {
-    const selectedItem = foodItems.find(item => item.id === id);
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-    const existingItem = cart.find(item => item.id === id);
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      cart.push({ ...selectedItem, quantity: 1 });
-    }
-  
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }
+       <div class="faq-section">
+                        <h2>Frequently Asked Questions</h2>
+                        <div class="faq-list">
+                            <div class="faq-item">
+                                <h3>How do I apply for a new pass?</h3>
+                                <p>Visit the 'Apply for Pass' section and follow the step-by-step process.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h3>What if I lose my pass?</h3>
+                                <p>Report it immediately through the 'My Passes' section or contact support.</p>
+                            </div>
+                            <div class="faq-item">
+                                <h3>How can I check bus timings?</h3>
+                                <p>Check the 'Routes & Timings' section for detailed schedules.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <h2>Submit a Query</h2>
+                        <form id="supportForm">
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <input type="text" required placeholder="Enter subject">
+                            </div>
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea required placeholder="Describe your issue"></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
   
   </script>
 
