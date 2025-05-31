@@ -413,10 +413,7 @@ status-badge.cancelled {
     border-bottom: 1px dashed var(--border-color);
 }
 
-.pass-barcode {
-    text-align: center;
-    margin-bottom: 15px;
-}
+
 
 .pass-barcode img {
     max-width: 100%;
